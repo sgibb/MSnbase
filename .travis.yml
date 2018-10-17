@@ -27,7 +27,6 @@ r_binary_packages:
   - grid
   - gridExtra
   - stats4
-  - digest
   - lattice
   - ggplot2
   - gplots
@@ -42,7 +41,6 @@ r_binary_packages:
   - rmarkdown
   - norm
   - shiny
-  - magrittr
 
 # before_script:
 #   - echo "BiocParallel::register(BiocParallel::SerialParam())" > ~/.Rprofile
