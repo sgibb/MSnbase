@@ -27,7 +27,6 @@ r_binary_packages:
   - gridExtra
   - lattice
   - ggplot2
-  - gplots
   - XML
   - scales
   - MASS
