@@ -1,7 +1,7 @@
 language: r
 r: bioc-devel
 cache: packages
-sudo: false       # use container based build system
+sudo: required
 warnings_are_errors: true
 dist: trusty
 
@@ -19,20 +19,42 @@ addons:
       - netcdf-bin # libnetcdf-dev doesn't contain nc-config in ubuntu 12.04 (in 16.04 it is part of libnetcdf-dev)
       - libhdf5-dev
 
-r_packages:
+r_binary_packages:
   - covr
+  - testthat
+  - plyr
+  - pryr
+  - grid
+  - gridExtra
+  - stats4
+  - digest
+  - lattice
+  - ggplot2
+  - gplots
+  - XML
+  - scales
+  - MASS
+  - microbenchmark
+  - zoo
+  - knitr
+  - roxygen2
+  - rgl
+  - rmarkdown
+  - norm
+  - shiny
+  - magrittr
 
 # before_script:
 #   - echo "BiocParallel::register(BiocParallel::SerialParam())" > ~/.Rprofile
-  
-script: 
-  - | 
+
+script:
+  - |
     R CMD build .
     travis_wait 40 R CMD check --no-build-vignettes --no-vignettes MSnbase*tar.gz
 
 after_failure:
   find *Rcheck -name '*.fail' -print -exec cat '{}' \;
-  
+
 after_success:
   - travis_wait 20 Rscript -e 'covr::codecov()'
 
@@ -43,5 +65,6 @@ after_success:
 
 notifications:
   email:
-    on_failure: lg390@cam.ac.uk
+    on_failure: change
+    on_success: change
 
