@@ -24,9 +24,7 @@ r_binary_packages:
   - testthat
   - plyr
   - pryr
-  - grid
   - gridExtra
-  - stats4
   - lattice
   - ggplot2
   - gplots
