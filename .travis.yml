@@ -50,6 +50,11 @@ jobs:
       script: true
       name: "Build dependencies and cache"
     - stage: "Check"
+      addons:
+        apt:
+          packages:
+            - libnetcdfc7
+              # hdf5-helpers libcf0 libgit2-0 libgit2-dev libhdf5-7 libhdf5-dev libnetcdf-dev libnetcdfc++4 libnetcdfc7 libnetcdff5 netcdf-bin
       script: R CMD build . && R CMD check --no-build-vignettes MSnbase*tar.gz
       install: skip
       after_success:
