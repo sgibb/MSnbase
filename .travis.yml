@@ -51,13 +51,13 @@ r_binary_packages:
   - stringi
   - xml2
   - igraph
-  - zlibbioc
-  - affyio
-  - affy
-  - preprocessCore
+  - r-bioc-zlibbioc
+  - r-bioc-affyio
+  - r-bioc-affy
+  - r-bioc-preprocesscore
   - MALDIquant
   - ncdf4
-  - rhdf5
+  - r-bioc-rhdf5
   - RCurl
   - geometry
   - lubridate
