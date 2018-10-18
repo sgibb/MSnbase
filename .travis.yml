@@ -68,12 +68,18 @@ r_binary_packages:
 
 jobs:
   include:
+    - stage: "Build"
+      script: R CMD build --no-build-vignettes --no-manual .
+      name: "examples"
     - stage: "Check"
       script: R CMD build --no-build-vignettes --no-manual . && R CMD check --no-build-vignettes --no-vignettes --no-manual --no-tests MSnbase*tar.gz
+      install: skip
       name: "examples"
     - script: R CMD build --no-build-vignettes --no-manual . && R CMD check --no-build-vignettes --no-vignettes --no-manual --no-codoc --no-examples MSnbase*tar.gz
+      install: skip
       name: "tests"
     - script: R CMD build . R CMD check --no-build-vignettes --no-codoc --no-examples --no-tests MSnbase*tar.gz
+      install: skip
       name: "vignettes"
 
 after_failure:
