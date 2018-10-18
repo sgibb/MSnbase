@@ -20,9 +20,11 @@ addons:
       - libhdf5-dev
 
 r_binary_packages:
+  - devtools
   - covr
   - testthat
   - plyr
+  - dplyr
   - pryr
   - gridExtra
   - lattice
@@ -38,25 +40,61 @@ r_binary_packages:
   - rmarkdown
   - norm
   - shiny
+  - git2r
+  - bit
+  - bit64
+  - bitops
+  - RSQLite
+  - caTools
+  - gtools
+  - data.table
+  - stringi
+  - xml2
+  - igraph
+  - zlibbioc
+  - affyio
+  - affy
+  - preprocessCore
+  - MALDIquant
+  - ncdf4
+  - rhdf5
+  - RCurl
+  - geometry
+  - lubridate
+  - FNN
+  - e1071
+  - mixtools
+  - gbm
 
 # before_script:
 #   - echo "BiocParallel::register(BiocParallel::SerialParam())" > ~/.Rprofile
 
-script:
-  - |
-    R CMD build .
-    travis_wait 40 R CMD check --no-build-vignettes --no-vignettes MSnbase*tar.gz
+jobs:
+  include:
+    stage: "Build"
+      name: "R CMD build"
+      script: R CMD build .
+    stage: "Check"
+      name: "R CMD check examples"
+      script: R CMD check --no-build-vignettes --no-vignettes --no-manual --no-tests MSnbase*tar.gz
+      name: "R CMD check tests"
+      script: R CMD check --no-build-vignettes --no-vignettes --no-manual --no-codoc --no-examples MSnbase*tar.gz
 
 after_failure:
   find *Rcheck -name '*.fail' -print -exec cat '{}' \;
 
 after_success:
   - travis_wait 20 Rscript -e 'covr::codecov()'
+  - travis_wait 20 Rscript -e 'pkgdown::build_site()'
 
-# # print timings (of examples) and sysinfo
-# after_script:
-#   - dump_logs_by_extension "timings"
-#   - dump_sysinfo
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_PAT
+  keep-history: true
+  local-dir: docs
+  on:
+    branch: master
 
 notifications:
   email:
