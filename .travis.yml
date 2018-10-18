@@ -25,6 +25,7 @@ r_binary_packages:
   - devtools
   - covr
   - testthat
+  - pkgdown
   - plyr
   - dplyr
   - pryr
