@@ -61,6 +61,7 @@ r_binary_packages:
   - geometry
   - lubridate
   - FNN
+  - class
   - e1071
   - mixtools
   - gbm
