@@ -70,7 +70,7 @@ jobs:
   include:
     - stage: "Build"
       script: R CMD build --no-build-vignettes --no-manual .
-      name: "examples"
+      name: "build"
     - stage: "Check"
       script: R CMD check --no-build-vignettes --no-vignettes --no-manual --no-tests MSnbase*tar.gz
       install: skip
