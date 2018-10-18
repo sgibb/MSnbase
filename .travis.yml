@@ -21,11 +21,13 @@ addons:
       - netcdf-bin # libnetcdf-dev doesn't contain nc-config in ubuntu 12.04 (in 16.04 it is part of libnetcdf-dev)
       - libhdf5-dev
 
+r_packages:
+  - pkgdown
+
 r_binary_packages:
   - devtools
   - covr
   - testthat
-  - pkgdown
   - plyr
   - dplyr
   - pryr
