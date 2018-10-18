@@ -72,12 +72,14 @@ jobs:
   include:
     - stage: "Build"
       name: "R CMD build"
-      script: R CMD build .
+      script: R CMD build --no-build-vignettes --no-manual .
     - stage: "Check"
       script: R CMD check --no-build-vignettes --no-vignettes --no-manual --no-tests MSnbase*tar.gz
-      name: "R CMD check examples"
+      name: "examples"
     - script: R CMD check --no-build-vignettes --no-vignettes --no-manual --no-codoc --no-examples MSnbase*tar.gz
-      name: "R CMD check tests"
+      name: "tests"
+    - script: R CMD check --no-codoc --no-examples --no-tests MSnbase*tar.gz
+      name: "vignettes"
 
 after_failure:
   find *Rcheck -name '*.fail' -print -exec cat '{}' \;
