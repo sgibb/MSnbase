@@ -12,6 +12,7 @@ dist: trusty
 before_install:
   - mkdir ~/.R && echo -e 'CCACHE=ccache\nCC=$(CCACHE) gcc\nCXX=$(CCACHE) g++\nCXX1X=$(CCACHE) g++\nCXX11=$(CCACHE) g++\nCXX14=$(CCACHE) g++\nFC=$(CCACHE) gfortran\nF77=$(CCACHE) gfortran\n' > ~/.R/Makevars
   - mkdir ~/.R && echo 'options(Ncpus = 2)' > ~/.Rprofile
+  - mkdir ~/.ccache && echo -e 'sloppiness = include_file_ctime\nhash_dir = false' > ~/.ccache/ccache.conf
 
 addons:
   apt:
