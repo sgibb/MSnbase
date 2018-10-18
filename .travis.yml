@@ -24,10 +24,8 @@ addons:
       - netcdf-bin # libnetcdf-dev doesn't contain nc-config in ubuntu 12.04 (in 16.04 it is part of libnetcdf-dev)
       - libhdf5-dev
 
-r_binary_packages:
-  - packrat
-
 install:
+  - R -e "install.packages('packrat')"
   - R -e "0" --args --bootstrap-packrat
   - R -e "packrat::restore(restart = FALSE)"
 
