@@ -17,22 +17,29 @@ addons:
       - libhdf5-dev
 
 r_packages:
-  - pkgdown
-
-r_binary_packages:
-  - devtools
   - covr
+  - pkgdown
   - testthat
   - knitr
   - roxygen2
-  - git2r
-  - MASS
-  - RSQLite
-  - stringi
-  - xml2
-  - XML
-  - igraph
-  - RCurl
+
+#r_binary_packages are not part of the cache and will slow down subsequent runs
+#r_binary_packages:
+#  - devtools
+#  - covr
+#  - testthat
+#  - knitr
+#  - roxygen2
+#  - git2r
+#  - MASS
+#  - RSQLite
+#  - stringi
+#  - xml2
+#  - XML
+#  - igraph
+#  - RCurl
+#  - rgl
+#  - matrixStats
 
 # before_script:
 #   - echo "BiocParallel::register(BiocParallel::SerialParam())" > ~/.Rprofile
