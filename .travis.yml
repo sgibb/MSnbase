@@ -26,7 +26,6 @@ r_binary_packages:
   - knitr
   - roxygen2
   - git2r
-  - dplyr
   - MASS
   - RSQLite
   - stringi
