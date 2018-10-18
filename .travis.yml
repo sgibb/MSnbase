@@ -5,38 +5,16 @@ sudo: required
 warnings_are_errors: true
 dist: trusty
 
-#r_binary_packages are not part of the cache and will slow down subsequent runs
-#r_binary_packages:
-#  - devtools
-#  - covr
-#  - testthat
-#  - knitr
-#  - roxygen2
-#  - git2r
-#  - MASS
-#  - RSQLite
-#  - stringi
-#  - xml2
-#  - XML
-#  - igraph
-#  - RCurl
-#  - rgl
-#  - matrixStats
+addons:
+  apt:
+    packages:
+      - libnetcdf-dev
+      - libhdf5-dev
+      - libgit2-dev
 
-# before_script:
-#   - echo "BiocParallel::register(BiocParallel::SerialParam())" > ~/.Rprofile
-
-# the *.tar.gz is not kept across different jobs, but R CMD build is fast
 jobs:
   include:
     - stage: "Build"
-      addons:
-        apt:
-          packages:
-            - libnetcdf-dev
-            - netcdf-bin # libnetcdf-dev doesn't contain nc-config in ubuntu 12.04 (in 16.04 it is part of libnetcdf-dev)
-            - libhdf5-dev
-            - libgit2-dev # git2r
       r_packages:
         - covr
         - pkgdown
@@ -50,11 +28,6 @@ jobs:
       script: true
       name: "Build dependencies and cache"
     - stage: "Check"
-      addons:
-        apt:
-          packages:
-            - libnetcdfc7
-              # hdf5-helpers libcf0 libgit2-0 libgit2-dev libhdf5-7 libhdf5-dev libnetcdf-dev libnetcdfc++4 libnetcdfc7 libnetcdff5 netcdf-bin
       script: R CMD build . && R CMD check --no-build-vignettes MSnbase*tar.gz
       install: skip
       after_success:
