@@ -10,7 +10,7 @@ warnings_are_errors: true
 dist: trusty
 
 before_install:
-  - mkdir -p ~/.R && echo -e 'CCACHE=ccache\nCC=$(CCACHE) gcc\nCXX=$(CCACHE) g++\nCXX1X=$(CCACHE) g++\nCXX11=$(CCACHE) g++\nCXX14=$(CCACHE) g++\nFC=$(CCACHE) gfortran\nF77=$(CCACHE) gfortran\n' > ~/.R/Makevars
+  - mkdir -p ~/.R && echo -e 'MAKEFLAGS = -j2\nCCACHE=ccache\nCC=$(CCACHE) gcc -std=c99 -g -O2 -fPIC\nCXX=$(CCACHE) g++ -std=c++0x -g -O2 -fPIC\nCXX1X=$(CCACHE) g++ -std=c++0x -g -O2 -fPIC\nCXX11=$(CCACHE) g++ -std=c++11 -g -O2 -fPIC\nCXX14=$(CCACHE) g++ -std=c++14 -g -O2 -fPIC\nFC=$(CCACHE) gfortran\nF77=$(CCACHE) gfortran\n' > ~/.R/Makevars; fi
   - mkdir -p ~/.R && echo 'options(Ncpus = 2)' > ~/.Rprofile
   - mkdir -p ~/.ccache && echo -e 'sloppiness = include_file_ctime\nhash_dir = false' > ~/.ccache/ccache.conf
 
