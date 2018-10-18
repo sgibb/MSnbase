@@ -26,77 +26,56 @@ r_binary_packages:
   - devtools
   - covr
   - testthat
-  - plyr
-  - dplyr
-  - pryr
-  - gridExtra
-  - lattice
-  - ggplot2
-  - XML
-  - scales
-  - MASS
-  - microbenchmark
-  - zoo
   - knitr
   - roxygen2
-  - rgl
-  - rmarkdown
-  - norm
-  - shiny
   - git2r
-  - bit
-  - bit64
-  - bitops
+  - dplyr
+  - MASS
   - RSQLite
-  - caTools
-  - gtools
-  - data.table
   - stringi
   - xml2
+  - XML
   - igraph
-  - MALDIquant
-  - ncdf4
   - RCurl
-  - geometry
-  - lubridate
-  - FNN
-  - mixtools
-  - gbm
 
 # before_script:
 #   - echo "BiocParallel::register(BiocParallel::SerialParam())" > ~/.Rprofile
 
+# the *.tar.gz is not kept across different jobs, but R CMD build is fast
 jobs:
   include:
     - stage: "Build"
       script: R CMD build --no-build-vignettes --no-manual .
       name: "build"
     - stage: "Check"
-      script: R CMD check --no-build-vignettes --no-vignettes --no-manual --no-tests MSnbase*tar.gz
+      script: R CMD build --no-build-vignettes --no-manual . && R CMD check --no-build-vignettes --no-vignettes --no-manual --no-tests MSnbase*tar.gz
       install: skip
       name: "examples"
-    - script: R CMD check --no-build-vignettes --no-vignettes --no-manual --no-codoc --no-examples MSnbase*tar.gz
+    - script: R CMD build --no-build-vignettes --no-manual . && R CMD check --no-build-vignettes --no-vignettes --no-manual --no-codoc --no-examples MSnbase*tar.gz
       install: skip
       name: "tests"
-    - script: R CMD check --no-build-vignettes --no-codoc --no-examples --no-tests MSnbase*tar.gz
+    - script: R CMD build . && R CMD check --no-build-vignettes --no-codoc --no-examples --no-tests MSnbase*tar.gz
       install: skip
       name: "vignettes"
+    - stage: "Codecov"
+      script: travis_wait 20 Rscript -e 'covr::codecov()'
+      install: skip
+      name: "codecov"
+    - stage: "Deploy"
+      install: skip
+      script: travis_wait 20 Rscript -e 'pkgdown::build_site()'
+      name: "deploy"
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        github-token: $GITHUB_PAT
+        keep-history: true
+        local-dir: docs
+        on:
+          branch: master
 
 after_failure:
   find *Rcheck -name '*.fail' -print -exec cat '{}' \;
-
-after_success:
-  - travis_wait 20 Rscript -e 'covr::codecov()'
-  - travis_wait 20 Rscript -e 'pkgdown::build_site()'
-
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_PAT
-  keep-history: true
-  local-dir: docs
-  on:
-    branch: master
 
 notifications:
   email:
