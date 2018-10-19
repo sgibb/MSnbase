@@ -1,6 +1,7 @@
 # full script at https://github.com/travis-ci/travis-build/blob/master/lib/travis/build/script/r.rb
 language: r
 r: bioc-devel
+bioc_check: true
 cache: packages
 sudo: required
 warnings_are_errors: true
