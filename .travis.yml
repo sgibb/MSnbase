@@ -34,7 +34,6 @@ jobs:
       after_success:
         - travis_wait 20 Rscript -e 'covr::codecov()'
         - test ${TRAVIS_BRANCH} = "master" -a -z "${TRAVIS_PULL_REQUEST_BRANCH}" && travis_wait 20 Rscript -e 'pkgdown::build_site()'
-      after_failure: find *Rcheck -name '*.fail' -print -exec cat '{}' \;
       name: "R CMD check"
 
 deploy:
