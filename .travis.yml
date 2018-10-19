@@ -1,3 +1,4 @@
+# full script at https://github.com/travis-ci/travis-build/blob/master/lib/travis/build/script/r.rb
 language: r
 r: bioc-devel
 cache: packages
@@ -47,5 +48,6 @@ deploy:
 
 notifications:
   email:
+    recipients: mail@sebastiangibb.de
     on_failure: change
     on_success: change
