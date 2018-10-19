@@ -27,14 +27,14 @@ test_that("averageMSnSet", {
     expect_equal(sampleNames(e1), sampleNames(avg))
     expect_equal(featureNames(avg), letters[1:6])
 
-    res <- matrix(c(1, rep(1.0, 3),
+    res <- matrix(c(NaN, rep(1.0, 3),
                     1, rep((1+2)/2, 3),
                     rep((1+2+3)/3, 8),
                     rep((2+3)/2, 4),
                     rep(3, 3), 10),
                   byrow = TRUE,
                   ncol = 4, nrow = 6)
-    colnames(res) <- LETTERS[4:1]
+    colnames(res) <- LETTERS[1:4]
     rownames(res) <- letters[1:6]
 
     expect_equal(res, exprs(avg))
