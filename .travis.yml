@@ -46,8 +46,7 @@ jobs:
       name: "vignettes"
     - stage: "Deploy"
       install: skip
-      script: skip
-      after_success: # because of skip it will always successful
+      script:
         - travis_wait 20 Rscript -e 'covr::codecov()'
         - test ${TRAVIS_BRANCH} = "master" -a -z "${TRAVIS_PULL_REQUEST_BRANCH}" && travis_wait 20 Rscript -e 'pkgdown::build_site()'
 
