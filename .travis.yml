@@ -29,7 +29,6 @@ jobs:
       script: true
       name: "Build dependencies and cache"
     - stage: "Check"
-      script: R CMD build . && R CMD check --no-build-vignettes MSnbase*tar.gz
       install: skip
       after_success:
         - travis_wait 20 Rscript -e 'covr::codecov()'
