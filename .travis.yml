@@ -31,11 +31,23 @@ jobs:
       script: true
       name: "Build dependencies and cache"
     - stage: "Check"
+      r_build_args: --no-build-vignettes --no-manual
+      r_check_args: --as-cran --no-build-vignettes --no-vignettes --no-manual --no-tests
+      before_script: rm -rf vignettes
       install: skip
-      after_success:
+      name: "examples"
+    - r_build_args: --no-build-vignettes --no-manual
+      r_check_args: --as-cran --no-build-vignettes --no-vignettes --no-manual --no-codoc --no-examples
+      install: skip
+      before_script: rm -rf vignettes
+      name: "tests"
+    - r_build_args:
+      r_check_args: --as-cran --no-build-vignettes --no-codoc --no-examples --no-tests
+      install: skip
+      name: "vignettes"
+    - after_success:
         - travis_wait 20 Rscript -e 'covr::codecov()'
         - test ${TRAVIS_BRANCH} = "master" -a -z "${TRAVIS_PULL_REQUEST_BRANCH}" && travis_wait 20 Rscript -e 'pkgdown::build_site()'
-      name: "R CMD check"
 
 deploy:
   provider: pages
