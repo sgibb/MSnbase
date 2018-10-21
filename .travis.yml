@@ -62,8 +62,7 @@ jobs:
         on:
           branch: master
 
-after_failure:
-  find *Rcheck -name '*.fail' -print -exec cat '{}' \;
+after_failure: dump_error_logs
 
 notifications:
   email:
