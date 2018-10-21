@@ -1,6 +1,6 @@
 context("MSmap class")
 
-skip_on_travis()
+print(system("df -h"))
 
 library("AnnotationHub")
 ah <- AnnotationHub()
