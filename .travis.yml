@@ -45,19 +45,19 @@ jobs:
       install: skip
       name: "vignettes"
     - stage: "Deploy"
-      name: "codecov and pkgdown (on master)"
       install: skip
       script:
         - travis_wait 20 Rscript -e 'covr::codecov()'
         - test ${TRAVIS_BRANCH} = "master" -a -z "${TRAVIS_PULL_REQUEST_BRANCH}" && travis_wait 20 Rscript -e 'pkgdown::build_site()'
+      name: "codecov and pkgdown (on master)"
       deploy:
         provider: pages
         skip-cleanup: true
         github-token: $GITHUB_PAT
         keep-history: true
         local-dir: docs
-          on:
-            branch: master
+        on:
+          branch: master
 
 notifications:
   email:
