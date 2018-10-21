@@ -62,6 +62,9 @@ jobs:
         on:
           branch: master
 
+after_failure:
+  find *Rcheck -name '*.fail' -print -exec cat '{}' \;
+
 notifications:
   email:
     recipients: mail@sebastiangibb.de
