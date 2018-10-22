@@ -36,25 +36,16 @@ jobs:
       r_build_args: --no-build-vignettes --no-manual
       r_check_args: --as-cran --no-build-vignettes --no-vignettes --no-manual --no-tests
       before_script: rm -rf vignettes
-      # Add `sleep 10` as workaround to avoid truncating of final output, see
-      # https://github.com/travis-ci/travis-ci/issues/6018
-      after_script: sleep 10
       install: skip
       name: "examples"
     - r_build_args: --no-build-vignettes --no-manual
       r_check_args: --as-cran --no-build-vignettes --no-vignettes --no-manual --no-codoc --no-examples
       install: skip
       before_script: rm -rf vignettes
-      # Add `sleep 10` as workaround to avoid truncating of final output, see
-      # https://github.com/travis-ci/travis-ci/issues/6018
-      after_script: sleep 10
       name: "tests"
     - r_build_args:
       r_check_args: --as-cran --no-build-vignettes --no-codoc --no-examples --no-tests
       install: skip
-      # Add `sleep 10` as workaround to avoid truncating of final output, see
-      # https://github.com/travis-ci/travis-ci/issues/6018
-      after_script: sleep 10
       name: "vignettes"
     - stage: "Deploy"
       install: skip
@@ -70,6 +61,8 @@ jobs:
         local-dir: docs
         on:
           branch: master
+
+after_failure: sleep 10
 
 notifications:
   email:
